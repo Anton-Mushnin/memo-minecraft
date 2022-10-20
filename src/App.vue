@@ -5,6 +5,8 @@ import { useRoundStore } from './stores/roundStore';
 
 const roundStore = useRoundStore();
 
+
+
 </script>
 
 <template>
@@ -13,18 +15,26 @@ const roundStore = useRoundStore();
   </header>
 
   <main>
-    <button type="button" @click="roundStore.round.start">START</button>
-    <TheOptions />
-    <TheField />
+    <div class="wrapper">
+
+      <button type="button" @click="roundStore.round.start">START</button>
+      <TheOptions />
+      <TheField />
+    </div>
   </main>
 </template>
 
 <style scoped>
 header {
   line-height: 1.5;
+  text-align: center;
 }
 
-
+.wrapper {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
 /* 
 @media (min-width: 1024px) {
   header {
