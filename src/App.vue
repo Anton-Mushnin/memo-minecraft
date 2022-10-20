@@ -2,6 +2,7 @@
 import TheOptions from './components/TheOptions.vue';
 import TheField from './components/TheField.vue';
 import { useRoundStore } from './stores/roundStore';
+import TheResult from './components/TheResult.vue';
 
 const roundStore = useRoundStore();
 
@@ -26,6 +27,7 @@ const roundStore = useRoundStore();
       PLAY
       </button>
       <TheField />
+      <TheResult v-if="!roundStore.round.started && roundStore.round.errors > -1"/>
     </div>
   </main>
 </template>

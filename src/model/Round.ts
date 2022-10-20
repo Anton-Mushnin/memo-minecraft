@@ -10,6 +10,7 @@ class Round {
   started = false;
   openCard = -1;
   disabled = false;
+  errors = -1;
   constructor (options: Options) {
     this.options = options;
     this.cards = [];
@@ -43,6 +44,8 @@ class Round {
     if (this.openCard > -1) {
       const firstCard = this.cards[this.openCard];
       const secondCard = this.cards[index];
+      firstCard.clickedTimes += 1;
+      secondCard.clickedTimes += 1;
       this.openCard = -1;
       if (firstCard.pair === secondCard.img) {
         secondCard.open = true;
@@ -53,6 +56,11 @@ class Round {
         }
       } else {
         this.disabled = true;
+        if (firstCard.clickedTimes > 1 && secondCard.clickedTimes > 1) {
+           this.errors += 1 
+        } else if(this.cards.find((c) => c.img === firstCard.pair && c !== firstCard)!.clickedTimes > 0) {
+            this.errors += 1 
+        }
         setTimeout(() => {
           firstCard.open = false;
           firstCard.display = firstCard.shirt;
@@ -68,6 +76,7 @@ class Round {
 
   start() {
     this.started = true;
+    this.errors = 0;
     this.update();
   }
 
@@ -84,6 +93,7 @@ class Card {
   shirt: string;
   display: string;
   solved = false;
+  clickedTimes = 0;
   constructor(img: string, pair: string, shirt: string) {
     this.img = img;
     this.pair = pair;
