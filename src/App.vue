@@ -1,14 +1,19 @@
 <script setup lang="ts">
+import TheOptions from './components/TheOptions.vue';
+import TheField from './components/TheField.vue';
+
+
 
 </script>
 
 <template>
   <header>
-
+    Memo-minecraft
   </header>
 
   <main>
-
+    <TheOptions />
+    <TheField />
   </main>
 </template>
 
@@ -18,7 +23,7 @@ header {
 }
 
 
-
+/* 
 @media (min-width: 1024px) {
   header {
     display: flex;
@@ -35,5 +40,5 @@ header {
     place-items: flex-start;
     flex-wrap: wrap;
   }
-}
+} */
 </style>
