@@ -7,7 +7,6 @@ const roundStore = useRoundStore();
 watch(() => roundStore.round.options.numberOfCards, 
 (size) => {
   styleObject.width = `${size / maxDivider(size) * 120 + 20}px`;
-  console.log(size, maxDivider(size), styleObject.width);
    
 })
 
@@ -21,7 +20,7 @@ const maxDivider = (n: number) => {
 }
 
 let styleObject = reactive({
-  width: `50%`,
+  width: `${roundStore.round.options.numberOfCards / maxDivider(roundStore.round.options.numberOfCards) * 120 + 20}px`,
 })
 
 </script>
@@ -35,7 +34,13 @@ let styleObject = reactive({
       :key='index' 
       @click="roundStore.round.click(index)"
     >
-      <img :src="`src/assets/images/${card.display}`" />    
+      <img 
+        :class="{
+          active: !roundStore.round.cards[index].open,
+          solved: roundStore.round.cards[index].solved,
+          }"
+        :src="`src/assets/images/${card.display}`" 
+      />    
     </div>
   </div>
 </template>
@@ -48,17 +53,31 @@ let styleObject = reactive({
   border: 1px solid green;
   width: fit-content; 
   justify-content: center;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 img {
   width: 100px;
   height: 100px;
+  border: 1px solid black;
+}
+
+.active:hover {
+  scale: 1.05;
+}
+.solved {
+  border: 5px solid rgb(100, 233, 217);
 }
 
   .card {
     width: 120px;
     height: 120px;
     padding: 10px;
+    /* background-color: white; */
+  }
+
+  .card:hover {
+    /* opacity: 0.7; */
   }
 
 </style>

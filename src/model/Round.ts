@@ -45,6 +45,8 @@ class Round {
       this.openCard = -1;
       if (firstCard.pair === secondCard.img) {
         secondCard.open = true;
+        secondCard.solved = true;
+        firstCard.solved = true;
         if (this.cards.filter((c) => c.open).length === this.cards.length) {
           this.started = false;
         }
@@ -77,6 +79,7 @@ class Card {
   open: boolean;
   shirt: string;
   display: string;
+  solved = false;
   constructor(img: string, pair: string, shirt: string) {
     this.img = img;
     this.pair = pair;
