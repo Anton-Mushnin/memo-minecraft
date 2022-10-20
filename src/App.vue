@@ -18,7 +18,13 @@ const roundStore = useRoundStore();
     <div class="wrapper">
 
       <TheOptions />
-      <button :disabled="roundStore.round.started" type="button" @click="roundStore.round.start">PLAY</button>
+      <button 
+        :disabled="roundStore.round.started" 
+        type="button" 
+        @click="roundStore.round.start"
+      >
+      PLAY
+      </button>
       <TheField />
     </div>
   </main>
@@ -32,7 +38,8 @@ header {
 button {
   background-color: rgba(100, 233, 217, 0.9);
   border-style: none;
-  color: white;
+  color: black;
+  font-weight: 200;
   padding: 3px 20px;
   font-size: 24px;
   margin-bottom: 20px;
