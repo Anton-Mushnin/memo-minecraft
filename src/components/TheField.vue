@@ -8,7 +8,12 @@ const roundStore = useRoundStore();
 
 <template>
   <div class="container">
-    <div class="card" v-for="(card, index) in roundStore.round.cards" :key='index'>
+    <div 
+      class="card" 
+      v-for="(card, index) in roundStore.round.cards" 
+      :key='index' 
+      @click="roundStore.round.click(index)"
+    >
       <img :src="`src/assets/images/${card.display}`" />    
     </div>
   </div>

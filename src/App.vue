@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import TheOptions from './components/TheOptions.vue';
 import TheField from './components/TheField.vue';
+import { useRoundStore } from './stores/roundStore';
 
-
+const roundStore = useRoundStore();
 
 </script>
 
@@ -12,6 +13,7 @@ import TheField from './components/TheField.vue';
   </header>
 
   <main>
+    <button type="button" @click="roundStore.round.start">START</button>
     <TheOptions />
     <TheField />
   </main>

@@ -2,10 +2,13 @@ import type { Options } from "./Options";
 import _ from 'lodash';
 
 
+const SHOW_TIME = 3000;
+
 class Round {
   cards: Card[];
   options: Options;
   started = false;
+  openCard = -1;
   constructor (options: Options) {
     this.options = options;
     this.cards = [];
@@ -29,6 +32,37 @@ class Round {
       cards.push(new Card(pair, img, shirt));
     })
     this.cards = _.shuffle(cards);
+  }
+
+  click(index: number) {
+    if (this.cards[index].open || !this.started) { return; }
+    this.cards[index].display = this.cards[index].img;
+    this.cards[index].open = true;
+    
+    if (this.openCard > -1) {
+      const firstCard = this.cards[this.openCard];
+      const secondCard = this.cards[index];
+      this.openCard = -1;
+      if (firstCard.pair === secondCard.img) {
+        secondCard.open = true;
+        if (this.cards.filter((c) => c.open).length === this.cards.length) {
+          this.started = false;
+        }
+      } else {
+        setTimeout(() => {
+          firstCard.open = false;
+          firstCard.display = firstCard.shirt;
+          secondCard.open = false;
+          secondCard.display = secondCard.shirt;
+        }, SHOW_TIME);
+      }
+    } else {
+      this.openCard = index;
+    }
+  }
+
+  start() {
+    this.started = true;
   }
 
 }
