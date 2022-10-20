@@ -2,13 +2,14 @@ import type { Options } from "./Options";
 import _ from 'lodash';
 
 
-const SHOW_TIME = 3000;
+const SHOW_TIME = 1500;
 
 class Round {
   cards: Card[];
   options: Options;
   started = false;
   openCard = -1;
+  disabled = false;
   constructor (options: Options) {
     this.options = options;
     this.cards = [];
@@ -35,7 +36,7 @@ class Round {
   }
 
   click(index: number) {
-    if (this.cards[index].open || !this.started) { return; }
+    if (this.cards[index].open || !this.started || this.disabled) { return; }
     this.cards[index].display = this.cards[index].img;
     this.cards[index].open = true;
     
@@ -51,11 +52,13 @@ class Round {
           this.started = false;
         }
       } else {
+        this.disabled = true;
         setTimeout(() => {
           firstCard.open = false;
           firstCard.display = firstCard.shirt;
           secondCard.open = false;
           secondCard.display = secondCard.shirt;
+          this.disabled = false;
         }, SHOW_TIME);
       }
     } else {
@@ -65,6 +68,7 @@ class Round {
 
   start() {
     this.started = true;
+    this.update();
   }
 
 }
@@ -93,7 +97,7 @@ class Card {
 const sets = {
   "easy": {
     displayName: 'easy',
-    imgPrefix: 'cr',
+    imgPrefix: 'r',
     pairPrefix: undefined,
     cardsNumber: 14,
     shirt: 'easy.jpg',

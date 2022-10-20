@@ -17,8 +17,8 @@ const roundStore = useRoundStore();
   <main>
     <div class="wrapper">
 
-      <button type="button" @click="roundStore.round.start">START</button>
       <TheOptions />
+      <button :disabled="roundStore.round.started" type="button" @click="roundStore.round.start">PLAY</button>
       <TheField />
     </div>
   </main>
@@ -29,28 +29,38 @@ header {
   line-height: 1.5;
   text-align: center;
 }
+button {
+  background-color: rgba(100, 233, 217, 0.9);
+  border-style: none;
+  color: white;
+  padding: 3px 20px;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
 
+button:hover:enabled {
+  background-color: rgba(45, 155, 142, 0.9);
+  cursor: pointer;
+}
+
+button:disabled {
+  color: gray;
+  background-color: rgba(100, 233, 217, 0.3);
+  visibility: hidden;
+
+}
 .wrapper {
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-/* 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-} */
+header {
+  font-size: 32px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
 </style>
