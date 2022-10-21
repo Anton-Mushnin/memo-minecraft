@@ -77,8 +77,5 @@ img {
     /* background-color: white; */
   }
 
-  .card:hover {
-    /* opacity: 0.7; */
-  }
 
 </style>

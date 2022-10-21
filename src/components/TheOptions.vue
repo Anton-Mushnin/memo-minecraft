@@ -57,6 +57,7 @@ const handle = (set: string) => {
 input[type=range]
 {
     -webkit-appearance: none;
+    appearance: none;
     width: 175px;
     height: 8px;
     padding: 0 5px;
