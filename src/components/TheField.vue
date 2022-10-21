@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { useRoundStore } from '@/stores/roundStore';
+import { assetsPath } from '@/urls.config';
 import { watch, reactive } from 'vue';
 
 const roundStore = useRoundStore();
+
+console.log(assetsPath);
 
 watch(() => roundStore.round.options.numberOfCards, 
 (size) => {
@@ -39,7 +42,7 @@ let styleObject = reactive({
           active: !roundStore.round.cards[index].open && roundStore.round.started,
           solved: roundStore.round.cards[index].solved,
           }"
-        :src="`src/assets/images/${card.display}`" 
+        :src="assetsPath + card.display" 
       />    
     </div>
   </div>
