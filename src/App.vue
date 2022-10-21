@@ -13,6 +13,15 @@ onMounted(() => {
   backgroundImage.value = `url('${assetsPath + 'IMG_6622.JPG'}')`;
 });
 
+
+function onResize() {
+  console.log(window.innerWidth, window.innerHeight);
+}
+
+window.onresize = onResize;
+
+
+
 </script>
 
 <template>
@@ -59,6 +68,9 @@ button {
   width: 100%;
   height: 100%;
   background-position: center;
+  background-size: cover;
+
+
 }
 
 button:hover:enabled {
