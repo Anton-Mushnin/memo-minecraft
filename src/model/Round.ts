@@ -64,7 +64,7 @@ class Round {
         }
       } else {
         this.disabled = true;
-        if (firstCard.clickedTimes > 1 && secondCard.clickedTimes > 1) {
+        if (firstCard.clickedTimes > 1 || secondCard.clickedTimes > 1) {
            this.errors += 1 
         } else if(this.cards.find((c) => c.img === firstCard.pair && c !== firstCard)!.clickedTimes > 0) {
             this.errors += 1 
@@ -125,7 +125,7 @@ const sets = {
     imgPrefix: 'r',
     pairPrefix: 'i',
     cardsNumber: 14,
-    shirt: 'hard.jpg',
+    shirt: 'hard2.jpg',
   }
 
 }

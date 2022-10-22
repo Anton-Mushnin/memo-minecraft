@@ -1,14 +1,9 @@
 <script setup lang="ts">
 import { useRoundStore } from '@/stores/roundStore';
 import { assetsPath } from '@/urls.config';
-import { watch, reactive, ref } from 'vue';
+import { watch, reactive, onMounted } from 'vue';
 
 const roundStore = useRoundStore();
-
-// console.log(assetsPath);
-
-// const orientation = ref('landscape');
-
 
 function dimensions () {
   const size = roundStore.round.options.numberOfCards;
@@ -19,53 +14,6 @@ function dimensions () {
   return [size / shortSide, shortSide];
 }
 
-const imgWidth = ref(100);
-
-watch(() => roundStore.round.options.numberOfCards, 
-() => {
-  // styleObject.width = `${dimensions()[0] * 120 + 40}px`;
-  // styleObject.height = `${dimensions()[1] * 120}px`;
-  calcSize();
-
-  // imgWidth = styleObject.width
-})
-
-function calcSize() {
-  let width = dimensions()[0] * 120;
-  if (window.innerWidth - 10 < width) {
-    width = window.innerWidth - 10;
-
-  }
-  let height = dimensions()[1] * 120 ;
-  if (window.innerHeight * .75 < height) {
-    height = window.innerHeight * .75;
-  }
-  const imgWidth = Math.min((width - 10) / dimensions()[0], height / dimensions()[1]);
-  styleObject.width = `${width + 10}px`;
-  styleObject.height = `${height}px`;
-
-  imgStyleObject.height= `${imgWidth}px`;
-  imgStyleObject.width= `${imgWidth}px`;
-
-  // console.log(window.innerHeight);
-  // console.log(height);
-  // console.log(dimensions()[1]);
-  // console.log(imgWidth.value);
-
-}
-
-function onResize() {
-  // console.log(window.innerWidth, window.innerHeight);
-  // styleObject.width = `${dimensions()[0] * 120 + 40}px`;
-  // styleObject.height = `${dimensions()[1] * 120}px`;
-  calcSize();
-
-
-  // if (window.innerHeight > window.innerWidth)
-}
-
-window.onresize = onResize;
-
 const maxDivider = (n: number) => {
   let maxD = Math.floor(Math.sqrt(n));
   while(maxD > 1) {
@@ -75,17 +23,29 @@ const maxDivider = (n: number) => {
   return 1;
 }
 
-// const 
+function calcSize() {
+  const maxHeight = screen.availHeight * 0.4;
+  const maxWidth = screen.availWidth * 0.8;
+  const [cols, rows] = dimensions();
+  const imgHeight = maxHeight / rows;
+  const imgWidth = maxWidth / cols;
+  const imgSize = Math.max(Math.min(imgHeight, imgWidth, 100), 47);
+  styleObject.width = `${cols * (imgSize + 10) + 20}px`;
+  imgStyleObject.height= `${imgSize}px`;
+  imgStyleObject.width= `${imgSize}px`;
+}
+
+window.onresize = calcSize;
+watch(() => roundStore.round.options.numberOfCards, () => {calcSize();})
+onMounted(() => {calcSize()});
 
 let styleObject = reactive({
-  width: `${dimensions()[0] * 120 + 40}px`,
-  height: `${dimensions()[1] * 120}px`,
-
+  width: ``,
 })
 
 let imgStyleObject = reactive({
-  width: '100px',
-  height: '100px',
+  width: '',
+  height: '',
 })
 
 </script>
@@ -104,6 +64,7 @@ let imgStyleObject = reactive({
           active: !roundStore.round.cards[index].open && roundStore.round.started,
           solved: roundStore.round.cards[index].solved,
           }"
+        :style="imgStyleObject"
         :src="assetsPath + card.display" 
       />    
     </div>
@@ -113,23 +74,20 @@ let imgStyleObject = reactive({
 <style scoped>
 
 .container {
-  display: inline-flex;
+  display: flex;
   flex-wrap: wrap;
   border: 1px solid green;
   min-width: 275px;
-  /* width: fit-content;  */
-  justify-content: center;
+  max-width: 75vw;
+  justify-content: space-evenly;
   background-color: rgba(255, 255, 255, 0.5);
-  max-width: 90%;
+  padding: 5px;
 }
 
 img {
-  /* width: 100px;
-  height: 100px; */
   border: 1px solid black;
   opacity: 1;
-  max-width: 10vh;
-  max-height: 10vh;
+  vertical-align: middle;
 }
 
 .active:hover {
@@ -137,17 +95,11 @@ img {
 }
 .solved {
   border: 3px solid rgb(100, 233, 217);
-  /* opacity: 0.6; */
 }
 
-  .card {
-    /* width: 120px;
-    height: 120px; */
-    /* max-width: 12vh;
-    max-height: 12vh; */
-    padding: 5px;
-    /* background-color: white; */
-  }
+.card {
+  padding: 5px;
+}
 
 
 </style>
