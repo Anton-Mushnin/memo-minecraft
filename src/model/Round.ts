@@ -83,8 +83,8 @@ class Round {
   }
 
   start() {
-    this.started = true;
-    this.errors = 0;
+    this.errors = this.started ? -1 : 0;
+    this.started = !this.started;
     this.update();
   }
 

@@ -29,7 +29,9 @@ onMounted(() => {
   <main>
     <div class="wrapper">
       <TheOptions />
-      <div class="minecraft-btn" @click="roundStore.round.start">Play</div>
+      <div class="minecraft-btn" @click="roundStore.round.start">
+        {{roundStore.round.started ? 'Qiut' : 'Play'}}
+      </div>
       <TheField />
     </div>
   </main>
