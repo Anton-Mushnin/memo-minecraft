@@ -46,7 +46,7 @@ const handle = (set: string) => {
 .container {
   margin-bottom: 15px;
   margin-top: 15px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.7);
   padding: 5px 50px;
   border: 1px solid green;
 }
@@ -69,6 +69,9 @@ input[type=range]
 .sets {
   display: flex;
   color: rgba(31, 71, 66, 0.9);
+  letter-spacing: 0.1em;
+  font-family: 'Minecraftia', sans-serif;
+  margin-bottom: 10px;
 }
 
 .set {

@@ -17,6 +17,11 @@ class Round {
     this.update();
   }
 
+  get errorsStr(): string {
+    const errors = this.errors;
+    return `<player> has made ${errors ? errors : 'no'} error${errors === 1 ? '' : 's'}${errors ? '' : '!'}`
+  }
+
   update() {
     const array: number[] = [];
     const set = sets[this.options.setName as keyof typeof sets];
@@ -53,6 +58,9 @@ class Round {
         firstCard.solved = true;
         if (this.cards.filter((c) => c.open).length === this.cards.length) {
           this.started = false;
+          setTimeout(() => {
+            this.errors = -1;
+          }, 10000)
         }
       } else {
         this.disabled = true;

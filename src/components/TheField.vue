@@ -116,6 +116,7 @@ let imgStyleObject = reactive({
   display: inline-flex;
   flex-wrap: wrap;
   border: 1px solid green;
+  min-width: 275px;
   /* width: fit-content;  */
   justify-content: center;
   background-color: rgba(255, 255, 255, 0.5);
@@ -135,7 +136,8 @@ img {
   scale: 1.05;
 }
 .solved {
-  border: 5px solid rgb(100, 233, 217);
+  border: 3px solid rgb(100, 233, 217);
+  /* opacity: 0.6; */
 }
 
   .card {
