@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { useRoundStore } from '@/stores/roundStore';
 import { assetsPath } from '@/urls.config';
-import { watch, reactive } from 'vue';
+import { watch, reactive, onMounted } from 'vue';
 
 const roundStore = useRoundStore();
 
-console.log(assetsPath);
-
-watch(() => roundStore.round.options.numberOfCards, 
-(size) => {
-  styleObject.width = `${size / maxDivider(size) * 120 + 40}px`;
-   
-})
+function dimensions () {
+  const size = roundStore.round.options.numberOfCards;
+  const shortSide = maxDivider(size);
+  if (window.innerHeight > window.innerWidth) {
+    return [shortSide, size / shortSide];
+  }
+  return [size / shortSide, shortSide];
+}
 
 const maxDivider = (n: number) => {
   let maxD = Math.floor(Math.sqrt(n));
@@ -22,8 +23,29 @@ const maxDivider = (n: number) => {
   return 1;
 }
 
+function calcSize() {
+  const maxHeight = screen.availHeight * 0.4;
+  const maxWidth = screen.availWidth * 0.8;
+  const [cols, rows] = dimensions();
+  const imgHeight = maxHeight / rows;
+  const imgWidth = maxWidth / cols;
+  const imgSize = Math.max(Math.min(imgHeight, imgWidth, 100), 47);
+  styleObject.width = `${cols * (imgSize + 10) + 20}px`;
+  imgStyleObject.height= `${imgSize}px`;
+  imgStyleObject.width= `${imgSize}px`;
+}
+
+window.onresize = calcSize;
+watch(() => roundStore.round.options.numberOfCards, () => {calcSize();})
+onMounted(() => {calcSize()});
+
 let styleObject = reactive({
-  width: `${roundStore.round.options.numberOfCards / maxDivider(roundStore.round.options.numberOfCards) * 120 + 40}px`,
+  width: ``,
+})
+
+let imgStyleObject = reactive({
+  width: '',
+  height: '',
 })
 
 </script>
@@ -42,6 +64,7 @@ let styleObject = reactive({
           active: !roundStore.round.cards[index].open && roundStore.round.started,
           solved: roundStore.round.cards[index].solved,
           }"
+        :style="imgStyleObject"
         :src="assetsPath + card.display" 
       />    
     </div>
@@ -51,34 +74,32 @@ let styleObject = reactive({
 <style scoped>
 
 .container {
-  display: inline-flex;
+  display: flex;
   flex-wrap: wrap;
   border: 1px solid green;
-  width: fit-content; 
-  justify-content: center;
+  min-width: 275px;
+  max-width: 75vw;
+  justify-content: space-evenly;
   background-color: rgba(255, 255, 255, 0.5);
+  padding: 5px;
 }
 
 img {
-  width: 100px;
-  height: 100px;
   border: 1px solid black;
-  opacity: 0.9;
+  opacity: 1;
+  vertical-align: middle;
 }
 
 .active:hover {
   scale: 1.05;
 }
 .solved {
-  border: 5px solid rgb(100, 233, 217);
+  border: 3px solid rgb(100, 233, 217);
 }
 
-  .card {
-    width: 120px;
-    height: 120px;
-    padding: 10px;
-    /* background-color: white; */
-  }
+.card {
+  padding: 5px;
+}
 
 
 </style>

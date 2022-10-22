@@ -33,7 +33,7 @@ const handle = (set: string) => {
       @change="roundStore.setSize(size)" 
       min="4" 
       step="2" 
-      :max="sets[currenSet as keyof typeof sets].cardsNumber" 
+      :max="sets[currenSet as keyof typeof sets].cardsNumber * 2" 
       v-model="size" 
       type="range" 
       class="slider"
@@ -45,10 +45,13 @@ const handle = (set: string) => {
 
 .container {
   margin-bottom: 15px;
-  margin-top: 15px;
-  background-color: rgba(255, 255, 255, 0.5);
-  padding: 5px 50px;
+  margin-top: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 5px 50px 15px 50px;
   border: 1px solid green;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .selected {
@@ -68,6 +71,10 @@ input[type=range]
 
 .sets {
   display: flex;
+  color: rgba(31, 71, 66, 0.9);
+  letter-spacing: 0.1em;
+  font-family: 'Minecraftia', sans-serif;
+  margin-bottom: 10px;
 }
 
 .set {
@@ -79,9 +86,7 @@ input[type=range]
   appearance: none;
   width: 20px;
   height: 20px;
-  /* border-radius: 50%; */
   background: rgba(100, 233, 217, 0.9);
-
   cursor: pointer;
 }
 </style>

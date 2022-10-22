@@ -1,13 +1,25 @@
 <script setup lang="ts">
 import { useRoundStore } from '@/stores/roundStore';
+import { watch, ref } from 'vue';
 
+
+
+
+const errorsStr = ref('');
 
 const roundStore = useRoundStore();
+
+watch(() => roundStore.round.errors,  
+(errors) => {
+  console.log(errors);
+  errorsStr.value = `${errors ? errors : 'no'} error${errors === 1 ? '' : 's'}${errors ? '' : '!'}`
+})
+
 </script>
 
 <template>
   <div class="result">
-    {{`${roundStore.round.errors} error${roundStore.round.errors === 1 ? '' : 's'}`}}
+    {{roundStore.round.errorsStr}}
   </div>
 </template>
 

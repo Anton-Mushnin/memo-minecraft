@@ -17,6 +17,11 @@ class Round {
     this.update();
   }
 
+  get errorsStr(): string {
+    const errors = this.errors;
+    return `<player> has made ${errors ? errors : 'no'} error${errors === 1 ? '' : 's'}${errors ? '' : '!'}`
+  }
+
   update() {
     const array: number[] = [];
     const set = sets[this.options.setName as keyof typeof sets];
@@ -53,10 +58,13 @@ class Round {
         firstCard.solved = true;
         if (this.cards.filter((c) => c.open).length === this.cards.length) {
           this.started = false;
+          setTimeout(() => {
+            this.errors = -1;
+          }, 10000)
         }
       } else {
         this.disabled = true;
-        if (firstCard.clickedTimes > 1 && secondCard.clickedTimes > 1) {
+        if (firstCard.clickedTimes > 1 || secondCard.clickedTimes > 1) {
            this.errors += 1 
         } else if(this.cards.find((c) => c.img === firstCard.pair && c !== firstCard)!.clickedTimes > 0) {
             this.errors += 1 
@@ -75,8 +83,8 @@ class Round {
   }
 
   start() {
-    this.started = true;
-    this.errors = 0;
+    this.errors = this.started ? -1 : 0;
+    this.started = !this.started;
     this.update();
   }
 
@@ -117,7 +125,7 @@ const sets = {
     imgPrefix: 'r',
     pairPrefix: 'i',
     cardsNumber: 14,
-    shirt: 'hard.jpg',
+    shirt: 'hard2.jpg',
   }
 
 }
