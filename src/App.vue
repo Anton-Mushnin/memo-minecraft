@@ -14,14 +14,6 @@ onMounted(() => {
 });
 
 
-function onResize() {
-  console.log(window.innerWidth, window.innerHeight);
-}
-
-window.onresize = onResize;
-
-
-
 </script>
 
 <template>
@@ -49,17 +41,14 @@ window.onresize = onResize;
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  text-align: center;
-}
+
 button {
   background-color: rgba(100, 233, 217, 0.9);
   border-style: none;
   color: black;
   font-weight: 200;
   padding: 3px 20px;
-  font-size: 24px;
+  font-size: 14px;
   margin-bottom: 20px;
 }
 
@@ -94,10 +83,29 @@ button:disabled {
 }
 
 header {
-  font-size: 32px;
+  font-size: 22px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+  line-height: 1.5;
+  text-align: center;
 }
+@media screen and (min-width: 320px) {
+  header {
+    font-size: calc(22px + 10 * ((100vw - 320px) / 680));
+  }
+  button {
+    font-size: calc(14px + 6 * ((100vw - 320px) / 680));
+  }
+}
+@media screen and (min-width: 1000px) {
+  header {
+    font-size: 32px;
+  }
+  button {
+    font-size: 20xp;
+  }
+}
+
 
 
 </style>

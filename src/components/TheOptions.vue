@@ -68,6 +68,7 @@ input[type=range]
 
 .sets {
   display: flex;
+  color: rgba(31, 71, 66, 0.9);
 }
 
 .set {
