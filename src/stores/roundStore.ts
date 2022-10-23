@@ -2,7 +2,7 @@ import { Options } from "@/model/Options";
 import { Round, sets } from "@/model/Round";
 import { defineStore } from "pinia";
 
-const defaultOptions = new Options(8, Object.keys(sets)[0]);
+const defaultOptions = new Options(6, Object.keys(sets)[0]);
 const newRound = new Round(defaultOptions);
 export const useRoundStore = defineStore('round', {
   state: () => ({

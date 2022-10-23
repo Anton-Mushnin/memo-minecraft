@@ -5,9 +5,9 @@ import {useRoundStore} from '../stores/roundStore';
 
 const roundStore = useRoundStore();
 
-const sizeIndex = ref(roundStore.round.options.numberOfCards);
+const sizeIndex = ref(1);
 const currenSet = ref(roundStore.round.options.setName);
-const sizes = [4, 6, 8, 12, 16, 24];
+const sizes = [4, 6, 8, 12, 16, 24, 28];
 
 const handle = (set: string) => {
   if (roundStore.round.started) { return }

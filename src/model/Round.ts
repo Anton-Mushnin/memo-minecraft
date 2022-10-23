@@ -34,16 +34,15 @@ class Round {
     sampleArray.forEach((n) => {
       const img = `${set.imgPrefix}${n}.jpg`;
       const pair = set.pairPrefix ? `${set.pairPrefix}${n}.jpg` : img;
-
-      cards.push(new Card(img, pair, shirt));
-      cards.push(new Card(pair, img, shirt));
+      const solved = `${set.solvedPrefix}${n}.jpg`;
+      cards.push(new Card(img, pair, shirt, solved));
+      cards.push(new Card(pair, img, shirt, solved));
     })
     this.cards = _.shuffle(cards);
   }
 
   click(index: number) {
     if (this.cards[index].open || !this.started || this.disabled) { return; }
-    this.cards[index].display = this.cards[index].img;
     this.cards[index].open = true;
     
     if (this.openCard > -1) {
@@ -56,6 +55,10 @@ class Round {
         secondCard.open = true;
         secondCard.solved = true;
         firstCard.solved = true;
+        setTimeout(() => {
+          firstCard.backImg = firstCard.solvedImg;
+          secondCard.backImg = secondCard.solvedImg;
+        }, 1000);
         if (this.cards.filter((c) => c.open).length === this.cards.length) {
           this.started = false;
           setTimeout(() => {
@@ -71,9 +74,9 @@ class Round {
         }
         setTimeout(() => {
           firstCard.open = false;
-          firstCard.display = firstCard.shirt;
+          this.cards[this.openCard] = {...firstCard};
           secondCard.open = false;
-          secondCard.display = secondCard.shirt;
+          this.cards[this.openCard] = {...secondCard};
           this.disabled = false;
         }, SHOW_TIME);
       }
@@ -99,15 +102,19 @@ class Card {
   pair: string;
   open: boolean;
   shirt: string;
-  display: string;
+  frontImg: string;
+  backImg: string;
   solved = false;
   clickedTimes = 0;
-  constructor(img: string, pair: string, shirt: string) {
+  solvedImg: string;
+  constructor(img: string, pair: string, shirt: string, solved: string) {
     this.img = img;
     this.pair = pair;
     this.shirt = shirt;
     this.open = false;
-    this.display = shirt;
+    this.frontImg = shirt;
+    this.backImg = img;
+    this.solvedImg = solved;
   }
 }
 
@@ -119,6 +126,7 @@ const sets = {
     pairPrefix: undefined,
     cardsNumber: 14,
     shirt: 'easy.jpg',
+    solvedPrefix: 'i',
   },
   "hard": {
     displayName: 'hard',
@@ -126,6 +134,7 @@ const sets = {
     pairPrefix: 'i',
     cardsNumber: 14,
     shirt: 'hard2.jpg',
+    solvedPrefix: 'i',
   }
 
 }
