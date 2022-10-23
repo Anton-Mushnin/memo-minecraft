@@ -30,7 +30,8 @@ function calcSize() {
   const imgHeight = maxHeight / rows;
   const imgWidth = maxWidth / cols;
   const imgSize = Math.max(Math.min(imgHeight, imgWidth, 100), 47);
-  styleObject.width = `${cols * (imgSize + 10) + 20}px`;
+  styleObject.width = `${cols * (imgSize + 10) }px`;
+  styleObject.height = `${rows * (imgSize + 10) }px`;
   // if (window.innerHeight < 750 && imgSize < 50) {styleObject.width = `${window.innerWidth - 10}px`}
   imgStyleObject.height= `${imgSize}px`;
   imgStyleObject.width= `${imgSize}px`;
@@ -42,6 +43,7 @@ onMounted(() => {calcSize()});
 
 let styleObject = reactive({
   width: ``,
+  height: '',
 })
 
 let imgStyleObject = reactive({
@@ -60,16 +62,16 @@ let imgStyleObject = reactive({
       :key='index' 
       @click="roundStore.round.click(index)"
     >
-      <img 
-        :class="{
-          active: !roundStore.round.cards[index].open && roundStore.round.started,
-          solved: roundStore.round.cards[index].solved,
-          }"
-        :style="imgStyleObject"
-        :src="assetsPath + card.display" 
-      />    
-    </div>
-  </div>
+          <img 
+            :class="{
+              active: !roundStore.round.cards[index].open && roundStore.round.started,
+              solved: roundStore.round.cards[index].solved,
+              }"
+            :style="imgStyleObject"
+            :src="assetsPath + (card.open ? card.backImg : card.frontImg)" 
+          />
+        </div>
+      </div>
 </template>
 
 <style scoped>
@@ -80,7 +82,8 @@ let imgStyleObject = reactive({
   border: 1px solid green;
   min-width: 275px;
   max-width: 95vw;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  align-content: space-between;
   background-color: rgba(255, 255, 255, 0.5);
   padding: 5px;
 }
@@ -99,7 +102,7 @@ img {
 }
 
 .card {
-  padding: 5px;
+  /* padding: 5px; */
 }
 
 

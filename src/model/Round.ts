@@ -43,7 +43,7 @@ class Round {
 
   click(index: number) {
     if (this.cards[index].open || !this.started || this.disabled) { return; }
-    this.cards[index].display = this.cards[index].img;
+    // this.cards[index].frontImg = this.cards[index].img;
     this.cards[index].open = true;
     
     if (this.openCard > -1) {
@@ -71,9 +71,9 @@ class Round {
         }
         setTimeout(() => {
           firstCard.open = false;
-          firstCard.display = firstCard.shirt;
+          // firstCard.frontImg = firstCard.shirt;
           secondCard.open = false;
-          secondCard.display = secondCard.shirt;
+          // secondCard.frontImg = secondCard.shirt;
           this.disabled = false;
         }, SHOW_TIME);
       }
@@ -99,7 +99,8 @@ class Card {
   pair: string;
   open: boolean;
   shirt: string;
-  display: string;
+  frontImg: string;
+  backImg: string;
   solved = false;
   clickedTimes = 0;
   constructor(img: string, pair: string, shirt: string) {
@@ -107,7 +108,8 @@ class Card {
     this.pair = pair;
     this.shirt = shirt;
     this.open = false;
-    this.display = shirt;
+    this.frontImg = shirt;
+    this.backImg = img;
   }
 }
 
