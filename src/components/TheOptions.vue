@@ -5,8 +5,9 @@ import {useRoundStore} from '../stores/roundStore';
 
 const roundStore = useRoundStore();
 
-const size = ref(roundStore.round.options.numberOfCards);
+const sizeIndex = ref(roundStore.round.options.numberOfCards);
 const currenSet = ref(roundStore.round.options.setName);
+const sizes = [4, 6, 8, 12, 16, 24];
 
 const handle = (set: string) => {
   if (roundStore.round.started) { return }
@@ -30,11 +31,11 @@ const handle = (set: string) => {
     </div>
     <input 
       :disabled="roundStore.round.started" 
-      @change="roundStore.setSize(size)" 
-      min="4" 
-      step="2" 
-      :max="sets[currenSet as keyof typeof sets].cardsNumber * 2" 
-      v-model="size" 
+      @change="roundStore.setSize(sizes[sizeIndex])" 
+      min="0" 
+      step="1" 
+      :max="sizes.length - 1" 
+      v-model="sizeIndex" 
       type="range" 
       class="slider"
     />
@@ -47,7 +48,7 @@ const handle = (set: string) => {
   margin-bottom: 15px;
   margin-top: 10px;
   background-color: rgba(255, 255, 255, 0.7);
-  padding: 5px 50px 15px 50px;
+  padding: 5px 10px 15px 10px;
   border: 1px solid green;
   display: flex;
   flex-direction: column;
@@ -61,13 +62,14 @@ input[type=range]
 {
     -webkit-appearance: none;
     appearance: none;
-    width: 175px;
+    width: 255px;
     height: 8px;
     padding: 0 5px;
     background: rgba(62, 145, 135, 0.9);
     outline: none;
 
 }
+
 
 .sets {
   display: flex;
@@ -81,6 +83,7 @@ input[type=range]
   cursor: pointer;
   margin-right: 10px;
 }
+
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;

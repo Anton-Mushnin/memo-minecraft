@@ -31,6 +31,7 @@ function calcSize() {
   const imgWidth = maxWidth / cols;
   const imgSize = Math.max(Math.min(imgHeight, imgWidth, 100), 47);
   styleObject.width = `${cols * (imgSize + 10) + 20}px`;
+  // if (window.innerHeight < 750 && imgSize < 50) {styleObject.width = `${window.innerWidth - 10}px`}
   imgStyleObject.height= `${imgSize}px`;
   imgStyleObject.width= `${imgSize}px`;
 }
@@ -78,7 +79,7 @@ let imgStyleObject = reactive({
   flex-wrap: wrap;
   border: 1px solid green;
   min-width: 275px;
-  max-width: 75vw;
+  max-width: 95vw;
   justify-content: space-evenly;
   background-color: rgba(255, 255, 255, 0.5);
   padding: 5px;
