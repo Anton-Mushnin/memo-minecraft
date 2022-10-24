@@ -1,5 +1,6 @@
+import { sets } from "@/model/Card";
 import { Options } from "@/model/Options";
-import { Round, sets } from "@/model/Round";
+import { Round } from "@/model/Round";
 import { defineStore } from "pinia";
 
 const defaultOptions = new Options(6, Object.keys(sets)[0]);

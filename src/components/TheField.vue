@@ -32,9 +32,9 @@ function calcSize() {
   const imgWidth = maxWidth / cols;
   const imgSize = Math.max(Math.min(imgHeight, imgWidth, 100), 47);
   styleObject.width = `${cols * (imgSize + 10) + 16}px`;
-  // styleObject.width = `${cols * (imgSize + 10) + 16}px`;
-
-  if (window.innerHeight < 750 && imgSize < 50) {styleObject.width = `${window.innerWidth - 10}px`}
+  if (window.innerHeight < 750 && imgSize < 50) {
+    styleObject.width = `${window.innerWidth - 10}px`
+  }
   imgStyleObject.height= `${imgSize}px`;
   imgStyleObject.width= `${imgSize}px`;
 }
@@ -53,10 +53,6 @@ let imgStyleObject = reactive({
   height: '50px',
 })
 
-const handle = (index: number) => {
-  roundStore.round.click(index)
-}
-
 </script>
 
 
@@ -74,10 +70,9 @@ const handle = (index: number) => {
       >
         <template v-slot:front>
           <img 
-            @click="handle(index)"
+            @click="roundStore.round.click(index)"
             :class="{
               active: !roundStore.round.cards[index].open && roundStore.round.started,
-              // solved: roundStore.round.cards[index].solved,
             }"
             :style="imgStyleObject"
             :src="assetsPath + (card.frontImg)" 
@@ -85,32 +80,12 @@ const handle = (index: number) => {
         </template>
         <template v-slot:back>
           <img 
-            @click="handle(index)"
-            :class="{
-              active: !roundStore.round.cards[index].open && roundStore.round.started,
-              // solved: roundStore.round.cards[index].solved,
-            }"
             :style="imgStyleObject"
             :src="assetsPath + (card.backImg)" 
       /> 
         </template>
       </vue-flip>
     </div>
-    <!-- <div 
-      class="card" 
-      v-for="(card, index) in roundStore.round.cards" 
-      :key='index' 
-      @click="roundStore.round.click(index)"
-    >
-      <img 
-        :class="{
-          active: !roundStore.round.cards[index].open && roundStore.round.started,
-          // solved: roundStore.round.cards[index].solved,
-          }"
-        :style="imgStyleObject"
-        :src="assetsPath + (card.open ? card.backImg : card.frontImg)" 
-      />    
-    </div> -->
   </div>
 </template>
 
@@ -129,15 +104,11 @@ const handle = (index: number) => {
 
 img {
   border: 1px solid black;
-  opacity: 1;
   vertical-align: middle;
 }
 
 .active:hover {
   scale: 1.05;
-}
-.solved {
-  border: 3px solid rgb(100, 233, 217);
 }
 
 .card {

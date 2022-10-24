@@ -1,6 +1,6 @@
-import type { Options } from "./Options";
 import _ from 'lodash';
-
+import type { Options } from "./Options";
+import { Card, sets } from './Card'
 
 const SHOW_TIME = 1500;
 
@@ -22,6 +22,7 @@ class Round {
     return `<player> has made ${errors ? errors : 'no'} error${errors === 1 ? '' : 's'}${errors ? '' : '!'}`
   }
 
+
   update() {
     const array: number[] = [];
     const set = sets[this.options.setName as keyof typeof sets];
@@ -41,6 +42,7 @@ class Round {
     this.cards = _.shuffle(cards);
   }
 
+
   click(index: number) {
     if (this.cards[index].open || !this.started || this.disabled) { return; }
     this.cards[index].open = true;
@@ -48,8 +50,6 @@ class Round {
     if (this.openCard > -1) {
       const firstCard = this.cards[this.openCard];
       const secondCard = this.cards[index];
-      firstCard.clickedTimes += 1;
-      secondCard.clickedTimes += 1;
       this.openCard = -1;
       if (firstCard.pair === secondCard.img) {
         secondCard.open = true;
@@ -70,6 +70,8 @@ class Round {
           }, 16500)
         }
       } else {
+        firstCard.clickedTimes += 1;
+        secondCard.clickedTimes += 1;
         this.disabled = true;
         if (firstCard.clickedTimes > 1 || secondCard.clickedTimes > 1) {
            this.errors += 1 
@@ -78,9 +80,7 @@ class Round {
         }
         setTimeout(() => {
           firstCard.open = false;
-          this.cards[this.openCard] = {...firstCard};
           secondCard.open = false;
-          this.cards[this.openCard] = {...secondCard};
           this.disabled = false;
         }, SHOW_TIME);
       }
@@ -101,62 +101,9 @@ class Round {
     }, 600);
   }
 
-  close() {
-    for (const card of this.cards) {
-      card.open = false;
-    }
-  }
-
 }
 
-
-
-
-
-class Card {
-  img: string;
-  pair: string;
-  open: boolean;
-  shirt: string;
-  frontImg: string;
-  backImg: string;
-  solved = false;
-  clickedTimes = 0;
-  solvedImg: string;
-  constructor(img: string, pair: string, shirt: string, solved: string) {
-    this.open = false;
-    this.img = img;
-    this.pair = pair;
-    this.shirt = shirt;
-    this.frontImg = shirt;
-    this.backImg = img;
-    this.solvedImg = solved;
-  }
-}
-
-
-const sets = {
-  "easy": {
-    displayName: 'easy',
-    imgPrefix: 'r',
-    pairPrefix: undefined,
-    cardsNumber: 14,
-    shirt: 'easy.jpg',
-    solvedPrefix: 'i',
-  },
-  "hard": {
-    displayName: 'hard',
-    imgPrefix: 'r',
-    pairPrefix: 'i',
-    cardsNumber: 14,
-    shirt: 'hard2.jpg',
-    solvedPrefix: 'i',
-  }
-
-}
-
-const setsNames = Object.keys(sets);
 
 export {
-  Round, sets, setsNames, Card
+  Round,
 }

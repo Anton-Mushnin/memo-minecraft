@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { sets } from '@/model/Round';
+import { sets } from '@/model/Card';
 import {ref} from 'vue';
 import {useRoundStore} from '../stores/roundStore';
 
@@ -58,16 +58,24 @@ const handle = (set: string) => {
 .selected {
   font-weight: 800;
 }
+
 input[type=range]
 {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 255px;
-    height: 8px;
-    padding: 0 5px;
-    background: rgba(62, 145, 135, 0.9);
-    outline: none;
-
+  -webkit-appearance: none;
+  appearance: none;
+  width: 255px;
+  height: 8px;
+  padding: 0 5px;
+  background: rgba(62, 145, 135, 0.9);
+  outline: none;
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: rgba(100, 233, 217, 0.9);
+  cursor: pointer;
 }
 
 
@@ -82,14 +90,5 @@ input[type=range]
 .set {
   cursor: pointer;
   margin-right: 10px;
-}
-
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  background: rgba(100, 233, 217, 0.9);
-  cursor: pointer;
 }
 </style>
