@@ -2,6 +2,7 @@
 import { useRoundStore } from '@/stores/roundStore';
 import { assetsPath } from '@/urls.config';
 import { watch, reactive, onMounted } from 'vue';
+import {VueFlip} from 'vue-flip';
 
 const roundStore = useRoundStore();
 
@@ -31,9 +32,9 @@ function calcSize() {
   const imgWidth = maxWidth / cols;
   const imgSize = Math.max(Math.min(imgHeight, imgWidth, 100), 47);
   styleObject.width = `${cols * (imgSize + 10) + 16}px`;
-  // styleObject.width = `${cols * (imgSize + 10) + 16}px`;
-
-  if (window.innerHeight < 750 && imgSize < 50) {styleObject.width = `${window.innerWidth - 10}px`}
+  if (window.innerHeight < 750 && imgSize < 50) {
+    styleObject.width = `${window.innerWidth - 10}px`
+  }
   imgStyleObject.height= `${imgSize}px`;
   imgStyleObject.width= `${imgSize}px`;
 }
@@ -48,8 +49,8 @@ let styleObject = reactive({
 })
 
 let imgStyleObject = reactive({
-  width: '',
-  height: '',
+  width: '50px',
+  height: '50px',
 })
 
 </script>
@@ -60,18 +61,30 @@ let imgStyleObject = reactive({
     <div 
       class="card" 
       v-for="(card, index) in roundStore.round.cards" 
-      :key='index' 
-      @click="roundStore.round.click(index)"
-    >
-      <img 
-        :class="{
-          active: !roundStore.round.cards[index].open && roundStore.round.started,
-          // solved: roundStore.round.cards[index].solved,
-          }"
-        :style="imgStyleObject"
-        :src="assetsPath + (card.open ? card.backImg : card.frontImg)" 
-
+      :key='index'
+      >
+      <vue-flip 
+        v-model="card.open"
+        :height="`${imgStyleObject.height}`"
+        :width="`${imgStyleObject.width}`"
+      >
+        <template v-slot:front>
+          <img 
+            @click="roundStore.round.click(index)"
+            :class="{
+              active: !roundStore.round.cards[index].open && roundStore.round.started,
+            }"
+            :style="imgStyleObject"
+            :src="assetsPath + (card.frontImg)" 
       />    
+        </template>
+        <template v-slot:back>
+          <img 
+            :style="imgStyleObject"
+            :src="assetsPath + (card.backImg)" 
+      /> 
+        </template>
+      </vue-flip>
     </div>
   </div>
 </template>
@@ -91,15 +104,11 @@ let imgStyleObject = reactive({
 
 img {
   border: 1px solid black;
-  opacity: 1;
   vertical-align: middle;
 }
 
 .active:hover {
   scale: 1.05;
-}
-.solved {
-  border: 3px solid rgb(100, 233, 217);
 }
 
 .card {
