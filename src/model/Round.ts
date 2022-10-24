@@ -60,10 +60,14 @@ class Round {
           secondCard.backImg = secondCard.solvedImg;
         }, 1000);
         if (this.cards.filter((c) => c.open).length === this.cards.length) {
-          this.started = false;
           setTimeout(() => {
-            this.errors = -1;
-          }, 10000)
+            this.started = false;
+          }, 1500)
+          setTimeout(() => {
+            if (!this.started) {
+              this.errors = -1;
+            }
+          }, 16500)
         }
       } else {
         this.disabled = true;
@@ -88,7 +92,19 @@ class Round {
   start() {
     this.errors = this.started ? -1 : 0;
     this.started = !this.started;
-    this.update();
+    for (const card of this.cards) {
+      card.open = false;
+    }
+    setTimeout(() => {
+      this.update();
+
+    }, 600);
+  }
+
+  close() {
+    for (const card of this.cards) {
+      card.open = false;
+    }
   }
 
 }
@@ -108,10 +124,10 @@ class Card {
   clickedTimes = 0;
   solvedImg: string;
   constructor(img: string, pair: string, shirt: string, solved: string) {
+    this.open = false;
     this.img = img;
     this.pair = pair;
     this.shirt = shirt;
-    this.open = false;
     this.frontImg = shirt;
     this.backImg = img;
     this.solvedImg = solved;

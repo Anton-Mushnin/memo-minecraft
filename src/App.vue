@@ -14,7 +14,6 @@ onMounted(() => {
 });
 
 function setBackground() {
-  console.log('qq');
   if (window.innerHeight > window.innerWidth) {
     backgroundImage.value = `url('${assetsPath + 'IMG_6658_3.JPG'}')`;
   } else {

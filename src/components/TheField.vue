@@ -2,6 +2,7 @@
 import { useRoundStore } from '@/stores/roundStore';
 import { assetsPath } from '@/urls.config';
 import { watch, reactive, onMounted } from 'vue';
+import {VueFlip} from 'vue-flip';
 
 const roundStore = useRoundStore();
 
@@ -48,9 +49,13 @@ let styleObject = reactive({
 })
 
 let imgStyleObject = reactive({
-  width: '',
-  height: '',
+  width: '50px',
+  height: '50px',
 })
+
+const handle = (index: number) => {
+  roundStore.round.click(index)
+}
 
 </script>
 
@@ -58,6 +63,40 @@ let imgStyleObject = reactive({
 <template>
   <div class="container" :style="styleObject">
     <div 
+      class="card" 
+      v-for="(card, index) in roundStore.round.cards" 
+      :key='index'
+      >
+      <vue-flip 
+        v-model="card.open"
+        :height="`${imgStyleObject.height}`"
+        :width="`${imgStyleObject.width}`"
+      >
+        <template v-slot:front>
+          <img 
+            @click="handle(index)"
+            :class="{
+              active: !roundStore.round.cards[index].open && roundStore.round.started,
+              // solved: roundStore.round.cards[index].solved,
+            }"
+            :style="imgStyleObject"
+            :src="assetsPath + (card.frontImg)" 
+      />    
+        </template>
+        <template v-slot:back>
+          <img 
+            @click="handle(index)"
+            :class="{
+              active: !roundStore.round.cards[index].open && roundStore.round.started,
+              // solved: roundStore.round.cards[index].solved,
+            }"
+            :style="imgStyleObject"
+            :src="assetsPath + (card.backImg)" 
+      /> 
+        </template>
+      </vue-flip>
+    </div>
+    <!-- <div 
       class="card" 
       v-for="(card, index) in roundStore.round.cards" 
       :key='index' 
@@ -70,9 +109,8 @@ let imgStyleObject = reactive({
           }"
         :style="imgStyleObject"
         :src="assetsPath + (card.open ? card.backImg : card.frontImg)" 
-
       />    
-    </div>
+    </div> -->
   </div>
 </template>
 

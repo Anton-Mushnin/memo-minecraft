@@ -13,7 +13,8 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "pinia": "^2.0.23",
-    "vue": "^3.2.38"
+    "vue": "^3.2.38",
+    "vue-flip": "^3.0.2"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.4",
