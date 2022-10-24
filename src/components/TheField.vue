@@ -38,7 +38,8 @@ function calcSize() {
   imgStyleObject.width= `${imgSize}px`;
 }
 
-window.onresize = calcSize;
+window.addEventListener('resize', calcSize);
+
 watch(() => roundStore.round.options.numberOfCards, () => {calcSize();})
 onMounted(() => {calcSize()});
 

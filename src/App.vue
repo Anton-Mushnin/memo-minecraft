@@ -9,8 +9,18 @@ const roundStore = useRoundStore();
 
 const backgroundImage = ref('');
 onMounted(() => {
-  backgroundImage.value = `url('${assetsPath + 'IMG_6622.JPG'}')`;
+  window.addEventListener('resize', setBackground);
+  setBackground();
 });
+
+function setBackground() {
+  console.log('qq');
+  if (window.innerHeight > window.innerWidth) {
+    backgroundImage.value = `url('${assetsPath + 'IMG_6658_3.JPG'}')`;
+  } else {
+    backgroundImage.value = `url('${assetsPath + 'IMG_6622.JPG'}')`;
+  }
+}
 
 
 </script>
@@ -85,6 +95,12 @@ header {
 
   .result {
     font-size: calc(11px + 5 * ((100vw - 320px) / 680));
+  }
+}
+
+@media (orientation: portrait) {
+  .result {
+    bottom: 1vh;
   }
 }
 @media screen and (min-width: 1000px) {
