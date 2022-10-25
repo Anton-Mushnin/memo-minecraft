@@ -11,6 +11,7 @@ class Round {
   openCard = -1;
   disabled = false;
   errors = -1;
+  backgrounds?: (string | undefined)[];
   constructor (options: Options) {
     this.options = options;
     this.cards = [];
@@ -26,6 +27,7 @@ class Round {
   update() {
     const array: number[] = [];
     const set = sets[this.options.setName as keyof typeof sets];
+    this.backgrounds = [set.bgImage, set.bgImagePortrait];
     for(let i = 0; i < set.cardsNumber; i += 1) {
       array.push(i+1);
     }

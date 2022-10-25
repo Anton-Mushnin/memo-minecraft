@@ -2,7 +2,7 @@
 import TheOptions from './components/TheOptions.vue';
 import TheField from './components/TheField.vue';
 import { useRoundStore } from './stores/roundStore';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { assetsPath } from './urls.config';
 
 const roundStore = useRoundStore();
@@ -13,11 +13,16 @@ onMounted(() => {
   setBackground();
 });
 
+watch(() => roundStore.round.backgrounds, () => setBackground());
+
 function setBackground() {
   if (window.innerHeight > window.innerWidth) {
-    backgroundImage.value = `url('${assetsPath + 'IMG_6658_3.JPG'}')`;
+    const imageName = roundStore.round.backgrounds?.[1] ?? "IMG_6658_3.JPG";
+    backgroundImage.value = `url('${assetsPath + imageName}')`;
   } else {
-    backgroundImage.value = `url('${assetsPath + 'IMG_6622.JPG'}')`;
+    const imageName = roundStore.round.backgrounds?.[0] ?? "IMG_6622.JPG";
+    backgroundImage.value = `url('${assetsPath + imageName}')`;
+
   }
 }
 

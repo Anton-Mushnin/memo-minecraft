@@ -29,6 +29,9 @@ const sets = {
     cardsNumber: 14,
     shirt: 'easy.jpg',
     solvedPrefix: 'i',
+    bgImage: 'IMG_6622.JPG',
+    bgImagePortrait: 'IMG_6658_3.JPG',
+
   },
   "hard": {
     displayName: 'hard',
@@ -37,6 +40,8 @@ const sets = {
     cardsNumber: 14,
     shirt: 'hard2.jpg',
     solvedPrefix: 'i',
+    bgImage: undefined,
+    bgImagePortrait: undefined,
   }
 
 }
