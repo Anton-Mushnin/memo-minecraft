@@ -24,22 +24,22 @@ class Card {
 const sets = {
   "easy": {
     displayName: 'easy',
-    imgPrefix: 'r',
+    imgPrefix: 'r_',
     pairPrefix: undefined,
-    cardsNumber: 14,
+    cardsNumber: 437,
     shirt: 'easy.jpg',
-    solvedPrefix: 'i',
+    solvedPrefix: 'i_',
     bgImage: 'IMG_6622.JPG',
     bgImagePortrait: 'IMG_6658_3.JPG',
 
   },
   "hard": {
     displayName: 'hard',
-    imgPrefix: 'r',
-    pairPrefix: 'i',
-    cardsNumber: 14,
+    imgPrefix: 'r_',
+    pairPrefix: 'i_',
+    cardsNumber: 437,
     shirt: 'hard2.jpg',
-    solvedPrefix: 'i',
+    solvedPrefix: 'i_',
     bgImage: undefined,
     bgImagePortrait: undefined,
   }

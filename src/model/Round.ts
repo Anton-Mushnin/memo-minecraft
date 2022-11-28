@@ -97,9 +97,10 @@ class Round {
     for (const card of this.cards) {
       card.open = false;
     }
+    this.disabled = true;
     setTimeout(() => {
       this.update();
-
+      this.disabled = false;
     }, 600);
   }
 
